@@ -5,24 +5,32 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
-  output   = "../lib/generated/prisma"
+  provider        = "prisma-client"
+  output          = "../lib/generated/prisma"
+  previewFeatures = ["multiSchema"]
 }
 
 datasource db {
   provider = "postgresql"
+  schemas  = ["spark"]
 }
 
 model SparkUser {
-  id        String   @id @default(cuid())
-  clerkId   String   @unique // Connects to your Clerk user
-  name      String?
-  email     String   @unique
-  image     String?
-  bio       String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  member    Member?
+  id              String    @id @default(cuid())
+  clerkId         String    @unique // Connects to your Clerk user
+  name            String?
+  email           String    @unique
+  emailVerified   DateTime?
+  passwordHash    String?
+  image           String?
+  profileComplete Boolean   @default(false)
+  bio             String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  member          Member?
+
+  @@map("SparkUser")
+  @@schema("spark")
 }
 
 model Member {
@@ -39,6 +47,8 @@ model Member {
   image       String?
   user        SparkUser @relation(fields: [userId], references: [id], onDelete: Cascade)
   photos      Photo[]
+
+  @@schema("spark")
 }
 
 model Photo {
@@ -48,4 +58,6 @@ model Photo {
 
   memberId String
   member   Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
+
+  @@schema("spark")
 }
