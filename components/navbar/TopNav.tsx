@@ -40,11 +40,6 @@ export default function TopNav() {
 								)}
 							>
 								{item.name}
-
-								{/* The Active Indicator (Underline) */}
-								{/* {isActive && (
-									<div className="absolute bottom-0 left-0 h-[2px] w-full bg-gradient-to-r from-rose-500 to-orange-400" />
-								)} */}
 							</Link>
 						);
 					})}
