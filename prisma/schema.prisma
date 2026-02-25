@@ -14,12 +14,38 @@ datasource db {
 }
 
 model SparkUser {
-  id            String    @id @default(cuid())
-  clerkId       String    @unique // Connects to your Clerk user
-  name          String?
-  email         String    @unique
-  image         String?
-  bio           String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  id        String   @id @default(cuid())
+  clerkId   String   @unique // Connects to your Clerk user
+  name      String?
+  email     String   @unique
+  image     String?
+  bio       String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  member    Member?
+}
+
+model Member {
+  id          String    @id @default(cuid())
+  userId      String    @unique
+  name        String
+  gender      String
+  dateOfBirth DateTime
+  created     DateTime  @default(now())
+  updated     DateTime  @default(now())
+  description String
+  city        String
+  country     String
+  image       String?
+  user        SparkUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+  photos      Photo[]
+}
+
+model Photo {
+  id       String  @id @default(cuid())
+  url      String
+  publicId String?
+
+  memberId String
+  member   Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
 }
