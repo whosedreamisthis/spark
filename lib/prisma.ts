@@ -1,20 +1,21 @@
-import { Pool, neonConfig } from '@neondatabase/serverless';
+import { neon } from '@neondatabase/serverless';
 import { PrismaNeon } from '@prisma/adapter-neon';
-import { PrismaClient } from '@prisma/client';
-import ws from 'ws';
+import { PrismaClient } from '@/lib/generated/prisma/client';
 
-// Required for Neon to work in local development/Node environments
-if (typeof window === 'undefined') {
-  neonConfig.webSocketConstructor = ws;
-}
+// 1. Connection string (ensure it includes ?schema=spark if you use standard CLI)
+const connectionString = String(process.env.DATABASE_URL || '');
+const sql = neon(connectionString);
 
-const connectionString = `${process.env.DATABASE_URL}`;
-const pool = new Pool({ connectionString });
-const adapter = new PrismaNeon(pool);
+// 2. IMPORTANT: Pass the schema name 'spark' as the second argument
+const adapter = new PrismaNeon(sql, { schema: 'spark' });
 
-const globalForPrisma = global as unknown as { prisma: PrismaClient };
+const globalForPrisma = (global as unknown) as { prisma: PrismaClient };
 
 export const prisma =
-  globalForPrisma.prisma || new PrismaClient({ adapter });
+	globalForPrisma.prisma ||
+	new PrismaClient({
+		adapter,
+		log: ['query', 'error', 'warn'],
+	});
 
 if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
