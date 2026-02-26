@@ -21,14 +21,16 @@ export default async function HomePage() {
 		where: { clerkId: user.id },
 	});
 
-	// 3. Create the user if they don't exist yet
 	if (!dbUser) {
-		await prisma.sparkUser.create({
-			data: {
+		await prisma.sparkUser.upsert({
+			where: { email: user.emailAddresses[0].emailAddress },
+			update: { clerkId: user.id }, // Update the ID in case it changed
+			create: {
 				clerkId: user.id,
 				email: user.emailAddresses[0].emailAddress,
-				name: `${user.firstName ?? ''} ${user.lastName ?? ''}`.trim(),
+				name: `${user.firstName} ${user.lastName}`,
 				image: user.imageUrl,
+				// ... any other fields
 			},
 		});
 	}

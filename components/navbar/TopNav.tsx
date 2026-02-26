@@ -13,7 +13,7 @@ const navItems = [
 	{ name: 'Messages', href: '/messages' },
 ];
 
-export default function TopNav() {
+export default function TopNav({ userId }: { userId: string | null }) {
 	const pathname = usePathname();
 
 	return (
@@ -44,7 +44,7 @@ export default function TopNav() {
 						);
 					})}
 				</div>
-				<ProfileButton />
+				<ProfileButton userId={userId} />
 			</div>
 		</nav>
 	);

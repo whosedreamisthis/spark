@@ -1,8 +1,7 @@
 'use client';
 
-import { SignInButton, SignUpButton, UserButton, useUser } from '@clerk/nextjs';
+import { SignInButton, SignUpButton, UserButton } from '@clerk/nextjs';
 import { User, LogIn, UserPlus } from 'lucide-react';
-import { useState, useEffect } from 'react'; // Added
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -12,35 +11,17 @@ import {
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
-export default function ProfileButton() {
-	const { isSignedIn, isLoaded } = useUser();
-	const [mounted, setMounted] = useState(false);
-
-	// Delay "Heavy" hydration until after the first paint
-	useEffect(() => {
-		setMounted(true);
-	}, []);
-
-	// 1. Placeholder (Matches UserButton size to prevent CLS)
-	if (!isLoaded || !mounted) {
+export default function ProfileButton({ userId }: { userId: string | null }) {
+	if (userId) {
 		return (
-			<div className="h-8 w-8 rounded-full bg-slate-100 flex items-center justify-center">
-				<User className="h-4 w-4 text-slate-300" />
-			</div>
-		);
-	}
-
-	// 2. Logged In: Clerk UserButton
-	if (isSignedIn) {
-		return (
-			<div className="h-8 w-8">
-				{' '}
-				{/* Explicit container to stabilize layout */}
+			<div className="h-8 w-8 flex items-center justify-center">
 				<UserButton
 					afterSignOutUrl="/"
 					appearance={{
 						elements: {
 							avatarBox: 'h-8 w-8',
+							// This is the secret: we set the initial state to look like the button
+							userButtonTrigger: 'opacity-100 transition-none',
 						},
 					}}
 				/>
