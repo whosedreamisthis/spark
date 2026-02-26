@@ -8,9 +8,10 @@ export default async function MembersPage() {
 		<div>
 			<ul>
 				{members &&
-					members.map((member) => (
-						<li key={member.id}>{member.name}</li>
-					))}
+					members.map((member) => {
+						console.log('memeber', member.name, member.clerkId);
+						return <li key={member.id}>{member.name}</li>;
+					})}
 			</ul>
 		</div>
 	);

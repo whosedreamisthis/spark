@@ -1,6 +1,6 @@
 export const membersData = [
 	{
-		email: 'lisa@test.com',
+		email: 'lisa@example.com',
 		username: 'lisa',
 		gender: 'female',
 		dateOfBirth: '1986-07-22',
@@ -12,6 +12,7 @@ export const membersData = [
 		city: 'Greenbush',
 		country: 'Martinique',
 		image: '/images/f1.jpeg',
+		clerkId: 'user_3ABJh0wwzsAi2apIDTagXEQJXgT',
 	},
 	{
 		email: 'karen@test.com',
@@ -26,6 +27,7 @@ export const membersData = [
 		city: 'Celeryville',
 		country: 'Grenada',
 		image: '/images/f2.jpeg',
+		clerkId: '1',
 	},
 	{
 		email: 'margo@test.com',
@@ -40,6 +42,7 @@ export const membersData = [
 		city: 'Rosewood',
 		country: 'Svalbard and Jan Mayen Islands',
 		image: '/images/f3.jpeg',
+		clerkId: '2',
 	},
 	{
 		email: 'lois@test.com',
@@ -54,6 +57,7 @@ export const membersData = [
 		city: 'Orviston',
 		country: 'Zimbabwe',
 		image: '/images/f4.jpeg',
+		clerkId: '4',
 	},
 	{
 		email: 'ruthie@test.com',
@@ -68,6 +72,7 @@ export const membersData = [
 		city: 'Germanton',
 		country: 'Antigua and Barbuda',
 		image: '/images/f5.jpeg',
+		clerkId: '5',
 	},
 	{
 		email: 'todd@test.com',
@@ -82,6 +87,7 @@ export const membersData = [
 		city: 'Cliff',
 		country: 'British Indian Ocean Territory',
 		image: '/images/m1.jpeg',
+		clerkId: '6',
 	},
 	{
 		email: 'porter@test.com',
@@ -96,6 +102,7 @@ export const membersData = [
 		city: 'Welda',
 		country: 'Christmas Island',
 		image: '/images/m2.jpeg',
+		clerkId: '7',
 	},
 	{
 		email: 'mayo@test.com',
@@ -110,6 +117,7 @@ export const membersData = [
 		city: 'Clarence',
 		country: 'Burkina Faso',
 		image: '/images/m3.jpeg',
+		clerkId: 'user_3ABOZGjkSxuasqlWL9wcroMpuqY',
 	},
 	{
 		email: 'skinner@test.com',
@@ -124,6 +132,7 @@ export const membersData = [
 		city: 'Herald',
 		country: 'Poland',
 		image: '/images/m4.jpeg',
+		clerkId: '9',
 	},
 	{
 		email: 'davis@test.com',
@@ -138,5 +147,6 @@ export const membersData = [
 		city: 'Lupton',
 		country: 'Luxembourg',
 		image: '/images/m5.jpeg',
+		clerkId: '10',
 	},
 ];

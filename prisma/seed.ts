@@ -28,9 +28,7 @@ async function seedMembers() {
 						name: member.name,
 						passwordHash: passwordHash,
 						image: member.image,
-						clerkId: `seed_clerk_${Math.random()
-							.toString(36)
-							.substring(7)}`,
+						clerkId: member.clerkId,
 						member: {
 							create: {
 								dateOfBirth: new Date(member.dateOfBirth),

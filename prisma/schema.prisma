@@ -35,7 +35,7 @@ model SparkUser {
 
 model Member {
   id          String    @id @default(cuid())
-  userId      String    @unique
+  clerkId     String    @unique
   name        String
   gender      String
   dateOfBirth DateTime
@@ -45,7 +45,7 @@ model Member {
   city        String
   country     String
   image       String?
-  user        SparkUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user        SparkUser @relation(fields: [clerkId], references: [clerkId], onDelete: Cascade)
   photos      Photo[]
 
   @@schema("spark")
