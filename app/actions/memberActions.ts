@@ -22,7 +22,6 @@ export async function getMembers() {
 
 export async function getMemberByUserId(userId: string) {
 	try {
-		await new Promise((res) => setTimeout(res, 3000));
 		return prisma.member.findUnique({
 			where: {
 				clerkId: userId,
