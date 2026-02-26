@@ -4,7 +4,7 @@ import { auth } from '@clerk/nextjs/server';
 
 export async function getMembers() {
 	const { userId } = await auth();
-	console.log('USER ID', userId);
+
 	if (!userId) return null;
 
 	try {
