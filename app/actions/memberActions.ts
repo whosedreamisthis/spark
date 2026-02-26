@@ -19,3 +19,15 @@ export async function getMembers() {
 		console.log(error);
 	}
 }
+
+export async function getMemberByUserId(userId: string) {
+	try {
+		return prisma.member.findUnique({
+			where: {
+				clerkId: userId,
+			},
+		});
+	} catch (error) {
+		console.log(error);
+	}
+}
