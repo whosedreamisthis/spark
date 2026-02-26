@@ -13,7 +13,7 @@ export default async function MemberPage({
 
 	if (!member) return notFound();
 	return (
-		<div className="relative flex min-h-screen flex-col">
+		<div className="relative flex">
 			<div className="flex-grow">{member?.name}</div>
 		</div>
 	);

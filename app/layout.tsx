@@ -29,7 +29,7 @@ export default async function RootLayout({
 		<ClerkProvider>
 			<html lang="en">
 				<body
-					className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+					className={`${geistSans.variable} ${geistMono.variable} h-screen overflow-hidden antialiased`}
 				>
 					<TopNav userId={userId} />
 					{children}

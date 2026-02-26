@@ -15,8 +15,10 @@ export default async function MemberLayout({
 	if (!member) return notFound();
 
 	return (
-		<div className="flex min-h-screen flex-col">
-			<main className="flex-grow">{children}</main>
+		<div className="flex h-[calc(100vh-64px)] flex-col overflow-hidden">
+			<main className="flex-grow overflow-y-auto no-scrollbar">
+				{children}
+			</main>
 			<MemberBottomBar member={member} />
 		</div>
 	);
