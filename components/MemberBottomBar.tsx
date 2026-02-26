@@ -25,6 +25,7 @@ export default function MemberBottomBar({ member }: Props) {
 							alt={member.name}
 							className="object-cover"
 							fill
+							sizes="32px"
 						/>
 					</div>
 					<span className="font-semibold text-sm">{member.name}</span>

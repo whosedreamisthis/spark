@@ -27,8 +27,6 @@ export default async function MemberPage({
 	const age = differenceInYears(new Date(), new Date(member.dateOfBirth));
 	const interests = member.interests ? member.interests.split(',') : [];
 
-	console.log('member', member);
-
 	return (
 		<div className="p-6 space-y-8 max-w-2xl mx-auto">
 			{/* 1. Header Section */}
