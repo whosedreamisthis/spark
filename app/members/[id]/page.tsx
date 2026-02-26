@@ -13,7 +13,7 @@ import {
 	Calendar,
 } from 'lucide-react';
 import { differenceInYears } from 'date-fns';
-
+import Image from 'next/image';
 export default async function MemberPage({
 	params,
 }: {
@@ -29,33 +29,50 @@ export default async function MemberPage({
 
 	return (
 		<div className="p-6 space-y-8 max-w-2xl mx-auto">
-			{/* 1. Header Section */}
-			<section>
-				<h1 className="text-4xl font-extrabold text-gray-900 tracking-tight">
-					{member.name},{' '}
-					<span className="font-light text-gray-500">{age}</span>
-				</h1>
-				<div className="flex items-center gap-1 text-gray-500 mt-2">
-					<MapPin size={18} className="text-rose-500" />
-					<span className="text-base font-medium">
-						{member.city}, {member.country}
-					</span>
+			<section className="flex flex-col md:flex-row gap-8 items-start">
+				{/* 1. The Image Container (Card Sized) */}
+				<div className="relative w-full max-w-[240px] aspect-square overflow-hidden rounded-xl shadow-sm border border-gray-100 group">
+					<Image
+						src={member.image || '/images/user.png'}
+						alt={member.name}
+						fill
+						priority
+						// Since it's max 300px on desktop, we optimize the sizes prop:
+						sizes="(max-width: 768px) 100vw, 300px"
+						className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
+					/>
+				</div>
+
+				{/* 2. The Data Section (Next to the image) */}
+				<div className="flex-1 space-y-4">
+					<div>
+						<h1 className="text-4xl font-bold text-gray-900">
+							{member.name},{' '}
+							<span className="font-light">{age}</span>
+						</h1>
+						<p className="text-gray-500 flex items-center gap-1">
+							<MapPin size={18} /> {member.city}, {member.country}
+						</p>
+					</div>
+
+					{/* Interests Section */}
+					<div className="flex flex-wrap gap-2">
+						{member.interests?.split(',').map((interest) => (
+							<span
+								key={interest}
+								className="px-3 py-1 bg-rose-100 text-rose-700 rounded-full text-xs font-semibold"
+							>
+								{interest.trim()}
+							</span>
+						))}
+					</div>
+
+					{/* Brief description or other quick stats can go here */}
+					<p className="text-gray-600 border-t pt-4 italic">
+						Looking for: {member.lookingFor}
+					</p>
 				</div>
 			</section>
-
-			{/* 2. Interests / Vibe Section */}
-			{interests.length > 0 && (
-				<section className="flex flex-wrap gap-2">
-					{interests.map((interest) => (
-						<span
-							key={interest}
-							className="px-4 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-semibold border border-gray-200"
-						>
-							{interest.trim()}
-						</span>
-					))}
-				</section>
-			)}
 
 			{/* 3. Personal Prompt Section */}
 			{member.promptQuestion && (
