@@ -40,6 +40,15 @@ async function seedMembers() {
 								city: member.city,
 								country: member.country,
 								image: member.image,
+								interests: member.interests,
+								lookingFor: member.lookingFor,
+								height: member.height,
+								ethnicity: member.ethnicity,
+								religion: member.religion,
+								education: member.education,
+								profession: member.profession,
+								promptQuestion: member.promptQuestion,
+								promptAnswer: member.promptAnswer,
 								photos: {
 									create: {
 										url: member.image,

@@ -48,6 +48,21 @@ model Member {
   user        SparkUser @relation(fields: [clerkId], references: [clerkId], onDelete: Cascade)
   photos      Photo[]
 
+  // New "Vibe" Fields
+  interests  String // Store as "Hiking,Coding,Sushi"
+  lookingFor String? // "Long-term", "Casual", etc.
+
+  // Life Details
+  height     Int? // In cm
+  ethnicity  String?
+  religion   String?
+  education  String?
+  profession String?
+
+  // Prompts (The "Conversation Starters")
+  promptQuestion String? // "My most embarrassing moment..."
+  promptAnswer   String?
+
   @@schema("spark")
 }
 
