@@ -19,6 +19,7 @@ export default async function HomePage() {
 	// 2. If logged in, check if they exist in your Neon DB
 	const dbUser = await prisma.sparkUser.findUnique({
 		where: { clerkId: user.id },
+		include: { member: true },
 	});
 
 	if (!dbUser) {
@@ -30,9 +31,23 @@ export default async function HomePage() {
 				email: user.emailAddresses[0].emailAddress,
 				name: `${user.firstName} ${user.lastName}`,
 				image: user.imageUrl,
+				member: {
+					create: {
+						name: user.firstName || 'User',
+						gender: 'other',
+						city: 'Unknown',
+						country: 'Unknown',
+						image: user.imageUrl,
+						// Add these to satisfy the TypeScript error:
+						dateOfBirth: new Date('1900-01-01'), // Placeholder date
+						description: '', // Empty string
+						interests: '', // Empty string
+					},
+				},
 				// ... any other fields
 			},
 		});
+		redirect('/members');
 	}
 
 	if (dbUser) {
