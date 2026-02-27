@@ -61,10 +61,12 @@ model Member {
   profession String?
 
   // Prompts (The "Conversation Starters")
-  promptQuestion String? // "My most embarrassing moment..."
-  promptAnswer   String?
-  sourceLikes    Like[]  @relation("source")
-  targetLikes    Like[]  @relation("target")
+  promptQuestion   String? // "My most embarrassing moment..."
+  promptAnswer     String?
+  sourceLikes      Like[]    @relation("source")
+  targetLikes      Like[]    @relation("target")
+  messagesSent     Message[] @relation("sender")
+  messagesReceived Message[] @relation("recipient")
 
   @@schema("spark")
 }
@@ -87,5 +89,22 @@ model Like {
   tagetMember  Member @relation("target", fields: [targetUserId], references: [clerkId], onDelete: Cascade)
 
   @@id([sourceUserId, targetUserId])
+  @@schema("spark")
+}
+
+model Message {
+  id               String    @id @default(cuid())
+  text             String
+  created          DateTime  @default(now())
+  senderId         String
+  recipientId      String
+  dateRead         DateTime?
+  senderDeleted    Boolean   @default(false)
+  recipientDeleted Boolean   @default(false)
+
+  // Relations
+  sender    Member @relation("sender", fields: [senderId], references: [clerkId], onDelete: Cascade)
+  recipient Member @relation("recipient", fields: [recipientId], references: [clerkId], onDelete: Cascade)
+
   @@schema("spark")
 }
