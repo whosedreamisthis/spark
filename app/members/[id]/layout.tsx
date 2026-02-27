@@ -16,7 +16,7 @@ export default async function MemberLayout({
 
 	return (
 		<div className="flex h-[calc(100vh-64px)] flex-col overflow-hidden">
-			<main className="flex-grow overflow-y-auto no-scrollbar">
+			<main className="flex-grow overflow-y-auto no-scrollbar pb-20">
 				{children}
 			</main>
 			<MemberBottomBar member={member} />
