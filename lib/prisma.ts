@@ -7,7 +7,7 @@ const connectionString = String(process.env.DATABASE_URL || '');
 const sql = neon(connectionString);
 
 // 2. IMPORTANT: Pass the schema name 'spark' as the second argument
-const adapter = new PrismaNeon(sql, { schema: 'spark' });
+const adapter = new PrismaNeon(sql as any, { schema: 'spark' });
 
 const globalForPrisma = (global as unknown) as { prisma: PrismaClient };
 
