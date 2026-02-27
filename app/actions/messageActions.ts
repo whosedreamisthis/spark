@@ -25,11 +25,21 @@ export async function createMessage(recipientId: string, text: string) {
 			},
 		});
 
+		const sender = await prisma.member.findUnique({
+			where: { clerkId: userId },
+		});
+
 		const channelName = [message.senderId, message.recipientId]
 			.sort()
 			.join('-');
 
 		await pusherServer.trigger(channelName, 'message:new', message);
+
+		await pusherServer.trigger(`user-${recipientId}`, 'message:new', {
+			senderId: userId,
+			senderName: sender?.name,
+			text: message.text,
+		});
 
 		return message;
 	} catch (error) {

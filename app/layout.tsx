@@ -5,6 +5,9 @@ import TopNav from '@/components/navbar/TopNav';
 import { auth } from '@clerk/nextjs/server';
 import { ClerkProvider } from '@clerk/nextjs';
 import PresenceTracker from '@/components/PresenceTracker';
+import NotificationListener from '@/components/NotificationListener';
+import { Toaster } from '@/components/ui/sonner';
+
 const geistSans = Geist({
 	variable: '--font-geist-sans',
 	subsets: ['latin'],
@@ -32,6 +35,8 @@ export default async function RootLayout({
 				<body
 					className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 				>
+					<Toaster position="bottom-center" />
+					{userId && <NotificationListener userId={userId} />}
 					{userId && <PresenceTracker />}
 					<TopNav userId={userId} />
 					{children}
