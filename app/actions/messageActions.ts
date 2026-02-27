@@ -2,6 +2,15 @@
 
 import { auth } from '@clerk/nextjs/server';
 import { prisma } from '@/lib/prisma';
+import Pusher from 'pusher';
+
+const pusherServer = new Pusher({
+	appId: process.env.PUSHER_APP_ID!,
+	key: process.env.NEXT_PUBLIC_PUSHER_APP_KEY!,
+	secret: process.env.PUSHER_SECRET!,
+	cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER!,
+	useTLS: true,
+});
 
 export async function createMessage(recipientId: string, text: string) {
 	try {
@@ -15,6 +24,12 @@ export async function createMessage(recipientId: string, text: string) {
 				recipientId,
 			},
 		});
+
+		const channelName = [message.senderId, message.recipientId]
+			.sort()
+			.join('-');
+
+		await pusherServer.trigger(channelName, 'message:new', message);
 
 		return message;
 	} catch (error) {
