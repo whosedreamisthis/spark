@@ -16,6 +16,7 @@ import { differenceInYears } from 'date-fns';
 import Image from 'next/image';
 import LikeButton from '@/components/LikeButton';
 import { fetchCurrentUserLikeIds } from '@/app/actions/likeActions';
+import { syncUser } from '@/lib/userSync';
 
 export default async function MemberPage({
 	params,

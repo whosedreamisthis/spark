@@ -5,14 +5,22 @@ import {
 } from '@/app/actions/likeActions';
 import MemberCard from '@/components/MemberCard';
 // import ListsBottomBar from '@/components/ListsBottomBar';
+import { auth } from '@clerk/nextjs/server';
+import { syncUser } from '@/lib/userSync';
 
 export default async function ListsPage({
 	searchParams,
 }: {
 	searchParams: Promise<{ type?: string }>;
 }) {
+	await syncUser();
 	const { type } = await searchParams;
 	const currentType = type || 'target';
+	const { userId, redirectToSignIn } = await auth();
+
+	if (!userId) {
+		return redirectToSignIn();
+	}
 
 	// 1. Fetch both the members for the list AND the current user's liked IDs
 	const [members, likeIds] = await Promise.all([

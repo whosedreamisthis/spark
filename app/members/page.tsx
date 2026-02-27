@@ -2,8 +2,10 @@ import React from 'react';
 import { getMembers } from '../actions/memberActions';
 import MemberCard from '@/components/MemberCard';
 import { fetchCurrentUserLikeIds } from '../actions/likeActions';
+import { syncUser } from '@/lib/userSync';
 
 export default async function MembersPage() {
+	await syncUser();
 	const members = await getMembers();
 	const likeIds = await fetchCurrentUserLikeIds();
 

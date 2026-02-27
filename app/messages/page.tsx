@@ -1,15 +1,27 @@
 import { getMessagesByContainer } from '@/app/actions/messageActions';
 import EmptyState from '@/components/messages/EmptyState';
 import MessagesBottomBar from '@/components/messages/MessagesBottomBar';
-import MessageTable from '@/components/messages/MessageTable'; // Or a list component
+import MessageTable from '@/components/messages/MessageTable';
+import { syncUser } from '@/lib/userSync';
+import { auth } from '@clerk/nextjs/server';
+import Link from 'next/link';
 
-// app/messages/page.tsx
 export default async function MessagesPage({
 	searchParams,
 }: {
 	searchParams: Promise<{ container: string }>;
 }) {
+	await syncUser();
+	// 1. Check for session
+	const { userId, redirectToSignIn } = await auth();
 	const { container } = await searchParams;
+
+	// 2. If no user, show the login prompt
+	if (!userId) {
+		return redirectToSignIn();
+	}
+
+	// 3. User is logged in, fetch messages
 	const messages = await getMessagesByContainer(container || 'inbox');
 
 	return (
