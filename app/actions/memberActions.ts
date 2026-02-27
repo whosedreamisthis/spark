@@ -31,3 +31,20 @@ export async function getMemberByUserId(userId: string) {
 		console.log(error);
 	}
 }
+
+export async function getMemberPhotosByUserId(userId: string) {
+	if (!userId) {
+		console.error('getMemberPhotosByUserId was called without a userId');
+		return [];
+	}
+	try {
+		const member = await prisma.member.findUnique({
+			where: { clerkId: userId },
+			include: { photos: true },
+		});
+		return member?.photos;
+	} catch (error) {
+		console.error(error);
+		return null;
+	}
+}
