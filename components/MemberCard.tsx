@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { calculateAge } from '@/lib/utils';
 import LikeButton from './LikeButton';
+import { isOnline } from '@/lib/utils';
 
 type Props = {
 	member: Member;
@@ -14,6 +15,7 @@ type Props = {
 
 export default function MemberCard({ member, index, likeIds }: Props) {
 	const hasLiked = likeIds.includes(member.clerkId);
+	const online = isOnline(member.lastActive);
 
 	return (
 		<Card className="relative flex flex-col p-0 overflow-hidden group border shadow-sm hover:shadow-md transition-shadow duration-300">
@@ -34,6 +36,15 @@ export default function MemberCard({ member, index, likeIds }: Props) {
 							hasLiked={hasLiked}
 						/>
 					</div>
+					{online && (
+						<div className="absolute top-3 left-3 z-10">
+							<span className="relative flex h-3 w-3">
+								<span className="absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+								{/* The solid center */}
+								<span className="relative inline-flex rounded-full h-3 w-3 bg-green-500 border-2 border-white"></span>
+							</span>
+						</div>
+					)}
 				</div>
 
 				{/* 2. Text Content - Removed margin, ensure it sits flush against the div above */}

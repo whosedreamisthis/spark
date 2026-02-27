@@ -13,7 +13,7 @@ export default async function PhotosPage({
 	const photos = await getMemberPhotosByUserId(id);
 
 	return (
-		<Card className="border-none shadow-none bg-transparent">
+		<Card className="border-none shadow-none bg-transparent m-5">
 			<CardHeader className="px-0 pb-4">
 				<div>
 					<h2 className="text-2xl font-bold text-gray-800">Photos</h2>

@@ -9,3 +9,10 @@ export function cn(...inputs: ClassValue[]) {
 export function calculateAge(dob: Date) {
   return differenceInYears(new Date(), dob);
 }
+
+export function isOnline(lastActive: Date | null) {
+  if (!lastActive) return false;
+  
+  const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000);
+  return lastActive > fiveMinutesAgo;
+}

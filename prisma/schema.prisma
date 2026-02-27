@@ -36,6 +36,7 @@ model SparkUser {
 model Member {
   id          String    @id @default(cuid())
   clerkId     String    @unique
+  lastActive  DateTime  @default(now())
   name        String
   gender      String
   dateOfBirth DateTime

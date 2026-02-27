@@ -74,3 +74,17 @@ export async function deletePhoto(photoId: string) {
 		where: { id: photoId },
 	});
 }
+
+export async function updateLastActive() {
+	const { userId } = await auth();
+	if (!userId) return;
+
+	try {
+		await prisma.member.update({
+			where: { clerkId: userId },
+			data: { lastActive: new Date() },
+		});
+	} catch (error) {
+		console.error('Failed to update last active', error);
+	}
+}

@@ -4,6 +4,7 @@ import './globals.css';
 import TopNav from '@/components/navbar/TopNav';
 import { auth } from '@clerk/nextjs/server';
 import { ClerkProvider } from '@clerk/nextjs';
+import PresenceTracker from '@/components/PresenceTracker';
 const geistSans = Geist({
 	variable: '--font-geist-sans',
 	subsets: ['latin'],
@@ -31,6 +32,7 @@ export default async function RootLayout({
 				<body
 					className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 				>
+					{userId && <PresenceTracker />}
 					<TopNav userId={userId} />
 					{children}
 				</body>
