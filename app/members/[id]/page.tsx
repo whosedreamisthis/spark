@@ -14,6 +14,9 @@ import {
 } from 'lucide-react';
 import { differenceInYears } from 'date-fns';
 import Image from 'next/image';
+import LikeButton from '@/components/LikeButton';
+import { fetchCurrentUserLikeIds } from '@/app/actions/likeActions';
+
 export default async function MemberPage({
 	params,
 }: {
@@ -21,6 +24,9 @@ export default async function MemberPage({
 }) {
 	const { id } = await params;
 	const member = await getMemberByUserId(id);
+	const likeIds = await fetchCurrentUserLikeIds();
+
+	const hasLiked = member ? likeIds.includes(member.clerkId) : false;
 
 	if (!member) return notFound();
 
@@ -41,6 +47,12 @@ export default async function MemberPage({
 						sizes="(max-width: 768px) 100vw, 300px"
 						className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
 					/>
+					<div className="absolute top-3 right-3 z-50">
+						<LikeButton
+							targetId={member.clerkId}
+							hasLiked={hasLiked}
+						/>
+					</div>
 				</div>
 
 				{/* 2. The Data Section (Next to the image) */}

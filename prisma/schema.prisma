@@ -62,6 +62,8 @@ model Member {
   // Prompts (The "Conversation Starters")
   promptQuestion String? // "My most embarrassing moment..."
   promptAnswer   String?
+  sourceLikes    Like[]  @relation("source")
+  targetLikes    Like[]  @relation("target")
 
   @@schema("spark")
 }
@@ -74,5 +76,15 @@ model Photo {
   memberId String
   member   Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
 
+  @@schema("spark")
+}
+
+model Like {
+  sourceUserId String
+  sourceMember Member @relation("source", fields: [sourceUserId], references: [clerkId], onDelete: Cascade)
+  targetUserId String
+  tagetMember  Member @relation("target", fields: [targetUserId], references: [clerkId], onDelete: Cascade)
+
+  @@id([sourceUserId, targetUserId])
   @@schema("spark")
 }

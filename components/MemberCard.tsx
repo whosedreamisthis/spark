@@ -4,13 +4,17 @@ import { Member } from '@/lib/generated/prisma/client';
 import Image from 'next/image';
 import Link from 'next/link';
 import { calculateAge } from '@/lib/utils';
+import LikeButton from './LikeButton';
 
 type Props = {
 	member: Member;
 	index: number;
+	likeIds: string[];
 };
 
-export default function MemberCard({ member, index }: Props) {
+export default function MemberCard({ member, index, likeIds }: Props) {
+	const hasLiked = likeIds.includes(member.clerkId);
+
 	return (
 		<Card className="relative flex flex-col p-0 overflow-hidden group border shadow-sm hover:shadow-md transition-shadow duration-300">
 			<Link href={`/members/${member.clerkId}`}>
@@ -24,6 +28,12 @@ export default function MemberCard({ member, index }: Props) {
 						sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 						className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
 					/>
+					<div className="absolute top-3 right-3 z-50">
+						<LikeButton
+							targetId={member.clerkId}
+							hasLiked={hasLiked}
+						/>
+					</div>
 				</div>
 
 				{/* 2. Text Content - Removed margin, ensure it sits flush against the div above */}
