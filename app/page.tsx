@@ -35,18 +35,8 @@ export default async function HomePage() {
 		});
 	}
 
-	// 4. Show the "Discovery" or "Members" feed for logged-in users
-	return (
-		<main className="p-8">
-			<h1 className="text-2xl font-bold">
-				Welcome back, {user.firstName}!
-			</h1>
-			<p className="text-slate-500">Ready to find your Spark?</p>
-
-			{/* This is where your Discovery Feed component will go later */}
-			<div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-				{/* Member Cards will go here */}
-			</div>
-		</main>
-	);
+	if (dbUser) {
+		// Logged in? Go straight to the action.
+		redirect('/members');
+	}
 }
