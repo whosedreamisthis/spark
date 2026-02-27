@@ -41,6 +41,7 @@ export default function EditEssentialsSection({ member }: { member: any }) {
 						className="space-y-4"
 					>
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+							{/* Height */}
 							<div className="space-y-1">
 								<label className="text-xs font-bold text-gray-400 uppercase">
 									Height (cm)
@@ -51,6 +52,8 @@ export default function EditEssentialsSection({ member }: { member: any }) {
 									defaultValue={member.height || ''}
 								/>
 							</div>
+
+							{/* Gender */}
 							<div className="space-y-1">
 								<label className="text-xs font-bold text-gray-400 uppercase">
 									Gender
@@ -72,6 +75,41 @@ export default function EditEssentialsSection({ member }: { member: any }) {
 									</SelectContent>
 								</Select>
 							</div>
+
+							{/* Ethnicity */}
+							<div className="space-y-1">
+								<label className="text-xs font-bold text-gray-400 uppercase">
+									Ethnicity
+								</label>
+								<Select
+									name="ethnicity"
+									defaultValue={member.ethnicity}
+								>
+									<SelectTrigger>
+										<SelectValue placeholder="Select ethnicity" />
+									</SelectTrigger>
+									<SelectContent>
+										<SelectItem value="Caucasian">
+											Caucasian
+										</SelectItem>
+										<SelectItem value="black">
+											Black
+										</SelectItem>
+										<SelectItem value="hispanic">
+											Hispanic
+										</SelectItem>
+										<SelectItem value="asian">
+											Asian
+										</SelectItem>
+										<SelectItem value="middle-eastern">
+											Middle Eastern
+										</SelectItem>
+										<SelectItem value="other">
+											Other
+										</SelectItem>
+									</SelectContent>
+								</Select>
+							</div>
 						</div>
 						<Button
 							type="submit"
@@ -81,8 +119,8 @@ export default function EditEssentialsSection({ member }: { member: any }) {
 						</Button>
 					</form>
 				) : (
-					/* REPLICA VIEW (From your current page.tsx) */
 					<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+						{/* Height */}
 						<div className="flex items-center gap-3">
 							<Ruler className="text-slate-400" size={20} />
 							<div>
@@ -90,11 +128,38 @@ export default function EditEssentialsSection({ member }: { member: any }) {
 									Height
 								</p>
 								<p className="text-sm font-medium text-slate-700">
-									{member.height || 'Not set'}
+									{member.height
+										? `${member.height}cm`
+										: 'Not set'}
 								</p>
 							</div>
 						</div>
-						{/* ... repeat for Ethnicity and Gender icons ... */}
+
+						{/* Ethnicity */}
+						<div className="flex items-center gap-3">
+							<Globe className="text-slate-400" size={20} />
+							<div>
+								<p className="text-xs text-slate-400 font-bold uppercase tracking-wider">
+									Ethnicity
+								</p>
+								<p className="text-sm font-medium text-slate-700">
+									{member.ethnicity || 'Not set'}
+								</p>
+							</div>
+						</div>
+
+						{/* Gender */}
+						<div className="flex items-center gap-3">
+							<User2 className="text-slate-400" size={20} />
+							<div>
+								<p className="text-xs text-slate-400 font-bold uppercase tracking-wider">
+									Gender
+								</p>
+								<p className="text-sm font-medium text-slate-700 capitalize">
+									{member.gender || 'Not set'}
+								</p>
+							</div>
+						</div>
 					</div>
 				)}
 			</CardContent>
