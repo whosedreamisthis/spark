@@ -26,6 +26,7 @@ export default function ListsBottomBar() {
 						<Link
 							key={link.value}
 							href={`/lists?type=${link.value}`}
+							replace
 							className={cn(
 								'flex flex-col items-center justify-center w-full h-full transition-colors',
 								isActive

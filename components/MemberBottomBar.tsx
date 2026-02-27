@@ -40,7 +40,7 @@ export default function MemberBottomBar({ member }: Props) {
 							{member.name}
 						</span>
 						<span className="text-[10px] text-rose-500 font-medium mt-0.5">
-							Online
+							{/* Online */}
 						</span>
 					</div>
 				</Link>
