@@ -1,6 +1,6 @@
 import { neon } from '@neondatabase/serverless';
 import { PrismaNeon } from '@prisma/adapter-neon';
-import { PrismaClient } from '@/lib/generated/prisma/client';
+import { PrismaClient } from './generated/prisma/client';
 
 // 1. Connection string (ensure it includes ?schema=spark if you use standard CLI)
 const connectionString = String(process.env.DATABASE_URL || '');
