@@ -11,12 +11,27 @@ export async function updateMemberProfile(formData: FormData) {
 	// Convert FormData to a plain object
 	const data = Object.fromEntries(formData.entries());
 
-	// Basic type conversion for numeric fields
-	if (data.height) data.height = parseInt(data.height as string);
+	const rawData = Object.fromEntries(formData.entries());
+
+	const updatedData = {
+		name: rawData.name as string,
+		gender: rawData.gender as string,
+		description: rawData.description as string,
+		city: rawData.city as string,
+		country: rawData.country as string,
+		interests: rawData.interests as string,
+		lookingFor: rawData.lookingFor as string,
+		profession: rawData.profession as string,
+		education: rawData.education as string,
+		ethnicity: rawData.ethnicity as string,
+		religion: rawData.religion as string,
+		// Safely convert height to a number
+		height: rawData.height ? parseInt(rawData.height as string) : null,
+	};
 
 	await prisma.member.update({
 		where: { clerkId: userId },
-		data: data,
+		data: updatedData,
 	});
 
 	revalidatePath('/profile');

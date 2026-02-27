@@ -1,4 +1,5 @@
 import { getMessagesByContainer } from '@/app/actions/messageActions';
+import EmptyState from '@/components/messages/EmptyState';
 import MessagesBottomBar from '@/components/messages/MessagesBottomBar';
 import MessageTable from '@/components/messages/MessageTable'; // Or a list component
 

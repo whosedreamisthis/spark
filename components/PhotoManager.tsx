@@ -6,14 +6,14 @@ import { Button } from '@/components/ui/button';
 import { useTransition } from 'react';
 import { deletePhoto, setMainPhoto } from '@/app/actions/userActions';
 import { useRouter } from 'next/navigation';
+import { Photo } from '@/lib/generated/prisma/client';
 
-export default function PhotoManager({
-	photos,
-	mainImage,
-}: {
-	photos: any[];
-	mainImage: string;
-}) {
+interface Props {
+	photos: Photo[];
+	mainImage: string | null; // Update this line
+}
+
+export default function PhotoManager({ photos, mainImage }: Props) {
 	const router = useRouter();
 	const [isPending, startTransition] = useTransition();
 

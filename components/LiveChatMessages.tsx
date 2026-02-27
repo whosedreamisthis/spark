@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { pusherClient } from '@/lib/pusher'; // Initialize pusher-js here
-import { Message } from '@prisma/client';
+import { Message } from '@/lib/generated/prisma/client';
 
 export default function LiveChatMessages({
 	initialMessages,
