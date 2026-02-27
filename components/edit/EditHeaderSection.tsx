@@ -1,4 +1,3 @@
-// app/profile/edit/_components/EditHeaderSection.tsx
 'use client';
 
 import { useState } from 'react';

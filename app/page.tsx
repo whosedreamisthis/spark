@@ -47,7 +47,7 @@ export default async function HomePage() {
 				// ... any other fields
 			},
 		});
-		redirect('/members');
+		redirect('/profile/edit');
 	}
 
 	if (dbUser) {
