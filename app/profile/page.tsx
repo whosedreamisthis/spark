@@ -129,19 +129,26 @@ export default async function ProfilePage() {
 						</p>
 					</div>
 
+					{/* Interests Section */}
 					<div>
-						<h3 className="text-lg font-semibold mb-3">
+						<h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
 							Interests
 						</h3>
 						<div className="flex flex-wrap gap-2">
-							{member.interests?.split(',').map((interest) => (
-								<span
-									key={interest}
-									className="px-3 py-1 bg-gray-100 text-gray-600 rounded-lg text-sm font-medium"
-								>
-									{interest.trim()}
+							{member.interests ? (
+								member.interests.split(',').map((interest) => (
+									<span
+										key={interest}
+										className="px-3 py-1 bg-rose-50 text-rose-600 rounded-lg text-sm font-medium"
+									>
+										{interest.trim()}
+									</span>
+								))
+							) : (
+								<span className="text-gray-400 text-sm italic">
+									No interests listed.
 								</span>
-							))}
+							)}
 						</div>
 					</div>
 				</CardContent>
