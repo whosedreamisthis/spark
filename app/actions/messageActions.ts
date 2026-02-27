@@ -69,3 +69,24 @@ export async function getMessageThread(recipientId: string) {
 		return [];
 	}
 }
+
+export async function getMessagesByContainer(container: string) {
+	const { userId } = await auth();
+	if (!userId) return [];
+
+	const isInbox = container === 'inbox';
+
+	return await prisma.message.findMany({
+		where: {
+			[isInbox ? 'recipientId' : 'senderId']: userId,
+			[isInbox ? 'recipientDeleted' : 'senderDeleted']: false,
+		},
+		include: {
+			// If it's inbox, we want to see who SENT it.
+			// If it's outbox, we want to see who we SENT IT TO.
+			sender: { select: { name: true, image: true, clerkId: true } },
+			recipient: { select: { name: true, image: true, clerkId: true } },
+		},
+		orderBy: { created: 'desc' },
+	});
+}
