@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import React, { Suspense } from 'react';
 import { getMembers } from '../actions/memberActions';
 import MemberCard from '@/components/MemberCard';
@@ -6,13 +7,6 @@ import { syncUser } from '@/lib/userSync';
 import MemberGridSkeleton from '@/components/MemberGridSkeleton';
 
 export default async function MembersPage() {
-	await syncUser();
-
-	const [members, likeIds] = await Promise.all([
-		getMembers(),
-		fetchCurrentUserLikeIds(),
-	]);
-
 	return (
 		<div className="m-10">
 			<h1 className="text-2xl font-bold mb-6">Members</h1>
@@ -25,10 +19,10 @@ export default async function MembersPage() {
 
 // Create this helper component in the same file or a new one
 async function MembersList() {
-	await syncUser();
-	const [members, likeIds] = await Promise.all([
+	const [members, likeIds, _] = await Promise.all([
 		getMembers(),
 		fetchCurrentUserLikeIds(),
+		syncUser(),
 	]);
 
 	return (

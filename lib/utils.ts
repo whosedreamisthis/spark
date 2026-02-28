@@ -16,3 +16,11 @@ export function isOnline(lastActive: Date | null) {
   const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000);
   return lastActive > fiveMinutesAgo;
 }
+
+export function formatMember(member: any) {
+  return {
+    ...member,
+    age: calculateAge(member.dateOfBirth),
+    isOnline: isOnline(member.lastActive),
+  };
+}

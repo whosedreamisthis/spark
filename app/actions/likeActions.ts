@@ -1,7 +1,7 @@
 'use server';
 import { auth } from '@clerk/nextjs/server';
 import { prisma } from '@/lib/prisma';
-import { use } from 'react';
+import { formatMember } from '@/lib/utils';
 
 export async function toggleLikeMember(targetUserId: string, isLiked: boolean) {
 	try {
@@ -85,26 +85,45 @@ export async function fetchLikedMembers(type = 'source') {
 
 async function fetchSourceLikes(userId: string) {
 	const sourceList = await prisma.like.findMany({
-		where: {
-			sourceUserId: userId,
-		},
+		where: { sourceUserId: userId },
 		select: {
-			tagetMember: true,
+			tagetMember: {
+				select: {
+					id: true,
+					name: true,
+					clerkId: true,
+					image: true,
+					city: true,
+					country: true,
+					lastActive: true, // Needed for formatMember
+					dateOfBirth: true, // Needed for formatMember
+				},
+			},
 		},
 	});
-	return sourceList.map((x) => x.tagetMember);
+	// Map through the list and format the nested member object
+	return sourceList.map((x) => formatMember(x.tagetMember));
 }
 
 async function fetchTargetLikes(userId: string) {
 	const targetList = await prisma.like.findMany({
-		where: {
-			targetUserId: userId,
-		},
+		where: { targetUserId: userId },
 		select: {
-			sourceMember: true,
+			sourceMember: {
+				select: {
+					id: true,
+					name: true,
+					clerkId: true,
+					image: true,
+					city: true,
+					country: true,
+					lastActive: true,
+					dateOfBirth: true,
+				},
+			},
 		},
 	});
-	return targetList.map((x) => x.sourceMember);
+	return targetList.map((x) => formatMember(x.sourceMember));
 }
 
 async function fetchMutualLikes(userId: string) {
@@ -118,7 +137,20 @@ async function fetchMutualLikes(userId: string) {
 		where: {
 			AND: [{ targetUserId: userId }, { sourceUserId: { in: likedIds } }],
 		},
-		select: { sourceMember: true },
+		select: {
+			sourceMember: {
+				select: {
+					id: true,
+					name: true,
+					clerkId: true,
+					image: true,
+					city: true,
+					country: true,
+					lastActive: true,
+					dateOfBirth: true,
+				},
+			},
+		},
 	});
-	return mutualList.map((x) => x.sourceMember);
+	return mutualList.map((x) => formatMember(x.sourceMember));
 }

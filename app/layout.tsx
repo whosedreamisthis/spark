@@ -32,6 +32,10 @@ export default async function RootLayout({
 	return (
 		<ClerkProvider>
 			<html lang="en">
+				<head>
+					<link rel="preconnect" href="https://res.cloudinary.com" />{' '}
+					{/* Replace with your actual image host domain */}
+				</head>
 				<body
 					className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 				>

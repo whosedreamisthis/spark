@@ -1,5 +1,6 @@
 'use server';
 import { prisma } from '@/lib/prisma';
+import { calculateAge, isOnline } from '@/lib/utils';
 import { auth } from '@clerk/nextjs/server';
 
 export async function getMembers() {
@@ -8,7 +9,7 @@ export async function getMembers() {
 	// if (!userId) return null;
 
 	try {
-		return prisma.member.findMany({
+		const members = prisma.member.findMany({
 			where: userId ? { NOT: { clerkId: userId } } : {},
 			select: {
 				id: true,
@@ -22,6 +23,11 @@ export async function getMembers() {
 				// Only include fields you actually display on the card!
 			},
 		});
+		return (await members).map((member) => ({
+			...member,
+			age: calculateAge(member.dateOfBirth), // Do it here!
+			isOnline: isOnline(member.lastActive),
+		}));
 	} catch (error) {
 		console.log(error);
 	}
