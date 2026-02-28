@@ -38,9 +38,9 @@ export default function MemberCard({ member, index, hasLiked }: Props) {
 						fetchPriority="high" // Add this for modern browsers
 						loading="eager" // Add this to skip the IntersectionObserver
 						sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
-						// className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
+						className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
 					/>
-					<div className="absolute top-3 right-3 z-50">
+					<div className="absolute top-0 right-3 z-50">
 						<LikeButton
 							targetId={member.clerkId}
 							hasLiked={hasLiked}

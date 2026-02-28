@@ -48,7 +48,7 @@ export default async function MemberPage({
 						sizes="(max-width: 768px) 100vw, 300px"
 						className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
 					/>
-					<div className="absolute top-3 right-3 z-50">
+					<div className="absolute top-0 right-3 z-50">
 						<LikeButton
 							targetId={member.clerkId}
 							hasLiked={hasLiked}
