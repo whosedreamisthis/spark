@@ -32,7 +32,6 @@ export default async function ListsPage({
 
 	return (
 		<div className="flex flex-col min-h-screen pb-20">
-			{' '}
 			{/* pb-20 prevents bar from covering cards */}
 			<div className="flex-1 p-6 max-w-7xl mx-auto w-full">
 				<div className="mb-6">

@@ -33,7 +33,7 @@ export default async function RootLayout({
 		<ClerkProvider>
 			<html lang="en">
 				<head>
-					<link rel="preconnect" href="https://res.cloudinary.com" />{' '}
+					<link rel="preconnect" href="https://res.cloudinary.com" />
 					{/* Replace with your actual image host domain */}
 				</head>
 				<body

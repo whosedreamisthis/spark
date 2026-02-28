@@ -11,7 +11,6 @@ export default async function HomePage() {
 	return (
 		<main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-rose-50 to-white">
 			<div className="flex flex-col gap-3 w-64">
-				{' '}
 				{/* Fixed narrow width */}
 				{/* Clerk Modal Trigger */}
 				<SignInButton mode="modal">
