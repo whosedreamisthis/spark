@@ -24,25 +24,6 @@ export default async function ChatPage({
 
 	return (
 		<div className="flex flex-col h-[calc(100vh-200px)] max-w-lg mx-auto bg-white overflow-hidden border-x">
-			<div className="flex items-center justify-between p-3 border-b bg-white/80 backdrop-blur-md sticky top-0 z-10">
-				<div className="flex items-center gap-3">
-					<Avatar className="h-9 w-9 border">
-						<AvatarImage src={member.image || '/images/user.png'} />
-						<AvatarFallback>{member.name[0]}</AvatarFallback>
-					</Avatar>
-					<div>
-						<p className="text-sm font-bold">{member.name}</p>
-						<p
-							className={`text-[10px] font-medium ${
-								online ? 'text-green-500' : 'text-gray-400'
-							}`}
-						>
-							{online ? 'Online now' : 'Offline'}
-						</p>
-					</div>
-				</div>
-			</div>
-
 			<ScrollArea className="flex-1 p-4 bg-slate-50/50">
 				{/* Pass data to the Client Component for live updates */}
 				<MessageList

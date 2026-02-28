@@ -6,6 +6,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Camera, MessageCircle } from 'lucide-react';
 import { usePathname } from 'next/navigation';
+import { isOnline } from '@/lib/utils';
 
 type Props = {
 	member: Member;
@@ -14,6 +15,8 @@ type Props = {
 export default function MemberBottomBar({ member }: Props) {
 	const pathname = usePathname();
 	const basePath = `/members/${member.clerkId}`;
+
+	const online = isOnline(member.lastActive);
 
 	// Removed Profile; kept only specific sub-actions
 	const navLinks = [
@@ -39,8 +42,12 @@ export default function MemberBottomBar({ member }: Props) {
 						<span className="font-bold text-sm text-gray-800 leading-none">
 							{member.name}
 						</span>
-						<span className="text-[10px] text-rose-500 font-medium mt-0.5">
-							{/* Online */}
+						<span
+							className={`text-[10px] ${
+								online ? 'text-green-400' : 'text-rose-500'
+							} font-medium mt-0.5`}
+						>
+							{online ? 'Online now' : 'Offline'}
 						</span>
 					</div>
 				</Link>
