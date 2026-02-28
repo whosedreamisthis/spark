@@ -48,7 +48,7 @@ export default function LikeButton({ targetId, hasLiked }: Props) {
 	}
 
 	return (
-		<div
+		<button
 			onClick={togglerLike}
 			disabled={isPending}
 			className="relative hover:opacity-80 transition cursor-pointer"
@@ -59,6 +59,6 @@ export default function LikeButton({ targetId, hasLiked }: Props) {
 					optimisticLike ? 'fill-rose-500' : 'fill-neutral-500/70'
 				}`}
 			/>
-		</div>
+		</button>
 	);
 }
