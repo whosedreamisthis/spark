@@ -1,57 +1,32 @@
-import { currentUser } from '@clerk/nextjs/server';
-import { prisma } from '@/lib/prisma';
+import { auth } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
+import Link from 'next/link';
+import { SignInButton } from '@clerk/nextjs';
 
 export default async function HomePage() {
-	const user = await currentUser();
+	const { userId } = await auth();
 
-	// 1. If no user is logged in, show your landing page
-	if (!user) {
-		return (
-			<main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-rose-50 to-white">
-				<h1 className="text-5xl font-bold text-rose-600">Spark</h1>
-				<p className="mt-4 text-slate-600">Find your perfect match.</p>
-				{/* Your SignUp/SignIn buttons will be in the navbar we built! */}
-			</main>
-		);
-	}
+	if (userId) redirect('/members');
 
-	// 2. If logged in, check if they exist in your Neon DB
-	const dbUser = await prisma.sparkUser.findUnique({
-		where: { clerkId: user.id },
-		include: { member: true },
-	});
-
-	if (!dbUser) {
-		await prisma.sparkUser.upsert({
-			where: { email: user.emailAddresses[0].emailAddress },
-			update: { clerkId: user.id }, // Update the ID in case it changed
-			create: {
-				clerkId: user.id,
-				email: user.emailAddresses[0].emailAddress,
-				name: `${user.firstName} ${user.lastName}`,
-				image: user.imageUrl,
-				member: {
-					create: {
-						name: user.firstName || 'User',
-						gender: 'other',
-						city: 'Unknown',
-						country: 'Unknown',
-						image: user.imageUrl,
-						// Add these to satisfy the TypeScript error:
-						dateOfBirth: new Date('1900-01-01'), // Placeholder date
-						description: '', // Empty string
-						interests: '', // Empty string
-					},
-				},
-				// ... any other fields
-			},
-		});
-		redirect('/profile/edit');
-	}
-
-	if (dbUser) {
-		// Logged in? Go straight to the action.
-		redirect('/members');
-	}
+	return (
+		<main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-rose-50 to-white">
+			<div className="flex flex-col gap-3 w-64">
+				{' '}
+				{/* Fixed narrow width */}
+				{/* Clerk Modal Trigger */}
+				<SignInButton mode="modal">
+					<button className="flex items-center justify-center h-11 bg-rose-600 text-white hover:bg-rose-700 transition-colors text-sm font-semibold rounded-md shadow-sm">
+						Sign In
+					</button>
+				</SignInButton>
+				{/* Guest Access */}
+				<Link
+					href="/members"
+					className="flex items-center justify-center h-11 border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 transition-colors text-sm font-semibold rounded-md"
+				>
+					Continue as Guest
+				</Link>
+			</div>
+		</main>
+	);
 }

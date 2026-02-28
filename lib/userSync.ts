@@ -1,7 +1,10 @@
-import { currentUser } from '@clerk/nextjs/server';
+import { auth, currentUser } from '@clerk/nextjs/server';
 import { prisma } from '@/lib/prisma';
 
 export async function syncUser() {
+	const { userId } = await auth(); // This is much faster
+	if (!userId) return null;
+
 	const user = await currentUser();
 	if (!user) return null;
 
