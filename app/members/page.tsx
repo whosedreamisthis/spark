@@ -25,6 +25,8 @@ async function MembersList() {
 		syncUser(),
 	]);
 
+	const likedSet = new Set(likeIds);
+
 	return (
 		<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
 			{members?.map((member, index) => (
@@ -32,7 +34,7 @@ async function MembersList() {
 					key={member.id}
 					member={member}
 					index={index}
-					likeIds={likeIds}
+					hasLiked={likedSet.has(member.clerkId)}
 				/>
 			))}
 		</div>

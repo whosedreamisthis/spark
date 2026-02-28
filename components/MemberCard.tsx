@@ -1,9 +1,14 @@
 import React from 'react';
+import dynamic from 'next/dynamic';
 import { Card, CardFooter } from './ui/card'; // We'll skip CardFooter to avoid default padding
 import { Member } from '@/lib/generated/prisma/client';
 import Image from 'next/image';
 import Link from 'next/link';
-import LikeButton from './LikeButton';
+
+const LikeButton = dynamic(() => import('./LikeButton'), {
+	ssr: true, // We keep SSR true so the button shows up in the HTML immediately
+	loading: () => <div className="w-8 h-8" />, // Optional: a small placeholder while JS loads
+});
 
 type MemberSummary = Pick<
 	Member,
@@ -16,12 +21,10 @@ type MemberSummary = Pick<
 type Props = {
 	member: MemberSummary;
 	index: number;
-	likeIds: string[];
+	hasLiked: boolean;
 };
 
-export default function MemberCard({ member, index, likeIds }: Props) {
-	const hasLiked = likeIds.includes(member.clerkId);
-
+export default function MemberCard({ member, index, hasLiked }: Props) {
 	return (
 		<Card className="relative flex flex-col p-0 overflow-hidden group border shadow-sm hover:shadow-md transition-shadow duration-300">
 			<Link href={`/members/${member.clerkId}`}>
@@ -35,7 +38,7 @@ export default function MemberCard({ member, index, likeIds }: Props) {
 						fetchPriority="high" // Add this for modern browsers
 						loading="eager" // Add this to skip the IntersectionObserver
 						sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
-						className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
+						// className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
 					/>
 					<div className="absolute top-3 right-3 z-50">
 						<LikeButton

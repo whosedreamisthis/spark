@@ -203,7 +203,7 @@ export default async function ProfilePage() {
 			</section>
 
 			{/* 4. Action Center */}
-			<div className="flex flex-col gap-3">
+			{/* <div className="flex flex-col gap-3">
 				<Button
 					asChild
 					variant="ghost"
@@ -217,7 +217,7 @@ export default async function ProfilePage() {
 						<span className="text-gray-300">→</span>
 					</Link>
 				</Button>
-			</div>
+			</div> */}
 		</div>
 	);
 }

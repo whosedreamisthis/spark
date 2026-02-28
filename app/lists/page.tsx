@@ -28,6 +28,7 @@ export default async function ListsPage({
 		fetchLikedMembers(currentType),
 		fetchCurrentUserLikeIds(),
 	]);
+	const likedSet = new Set(likeIds);
 
 	return (
 		<div className="flex flex-col min-h-screen pb-20">
@@ -55,7 +56,7 @@ export default async function ListsPage({
 									key={member.id}
 									member={member}
 									index={index}
-									likeIds={likeIds} // Now correctly passed
+									hasLiked={likedSet.has(member.clerkId)}
 								/>
 							),
 					)}
