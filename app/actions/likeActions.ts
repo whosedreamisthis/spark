@@ -15,20 +15,19 @@ export async function toggleLikeMember(targetUserId: string, isLiked: boolean) {
 		}
 
 		if (isLiked) {
-			await prisma.like.delete({
+			await prisma.like.deleteMany({
+				where: { sourceUserId: userId, targetUserId },
+			});
+		} else {
+			await prisma.like.upsert({
 				where: {
 					sourceUserId_targetUserId: {
 						sourceUserId: userId,
 						targetUserId,
 					},
 				},
-			});
-		} else {
-			await prisma.like.create({
-				data: {
-					sourceUserId: userId,
-					targetUserId,
-				},
+				update: {}, // Do nothing if it already exists
+				create: { sourceUserId: userId, targetUserId },
 			});
 		}
 		return {
