@@ -6,6 +6,7 @@ import { isOnline } from '@/lib/utils';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import MessageList from '@/components/MessageList'; // Create this next
+import { redirect } from 'next/navigation';
 
 export default async function ChatPage({
 	params,
@@ -15,6 +16,9 @@ export default async function ChatPage({
 	const { id } = await params;
 	const { userId: currentUserId } = await auth();
 
+	if (!currentUserId) {
+		redirect('/');
+	}
 	const member = await getMemberByUserId(id);
 	const initialMessages = await getMessageThread(id);
 
