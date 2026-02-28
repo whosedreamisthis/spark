@@ -35,7 +35,7 @@ export default async function RootLayout({
 				<body
 					className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 				>
-					<Toaster position="bottom-center" />
+					<Toaster richColors position="bottom-center" />
 					{userId && <NotificationListener userId={userId} />}
 					{userId && <PresenceTracker />}
 					<TopNav userId={userId} />

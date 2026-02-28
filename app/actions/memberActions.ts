@@ -5,16 +5,19 @@ import { auth } from '@clerk/nextjs/server';
 export async function getMembers() {
 	const { userId } = await auth();
 
-	if (!userId) return null;
+	// if (!userId) return null;
 
 	try {
-		return prisma.member.findMany({
-			where: {
-				NOT: {
-					clerkId: userId,
+		if (userId) {
+			return prisma.member.findMany({
+				where: {
+					NOT: {
+						clerkId: userId,
+					},
 				},
-			},
-		});
+			});
+		}
+		return prisma.member.findMany();
 	} catch (error) {
 		console.log(error);
 	}

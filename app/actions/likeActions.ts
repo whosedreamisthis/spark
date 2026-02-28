@@ -7,7 +7,12 @@ export async function toggleLikeMember(targetUserId: string, isLiked: boolean) {
 	try {
 		const { userId } = await auth();
 
-		if (!userId) throw new Error('Unauthorized');
+		if (!userId) {
+			return {
+				status: 'unauthorized',
+				message: 'You must be logged in to like members.',
+			};
+		}
 
 		if (isLiked) {
 			await prisma.like.delete({
@@ -26,6 +31,10 @@ export async function toggleLikeMember(targetUserId: string, isLiked: boolean) {
 				},
 			});
 		}
+		return {
+			status: 'success',
+			message: 'Toggle Like Succeeded',
+		};
 	} catch (error) {
 		console.log(error);
 		throw error;
