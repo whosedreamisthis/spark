@@ -1,28 +1,46 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { getMembers } from '../actions/memberActions';
 import MemberCard from '@/components/MemberCard';
 import { fetchCurrentUserLikeIds } from '../actions/likeActions';
 import { syncUser } from '@/lib/userSync';
+import MemberGridSkeleton from '@/components/MemberGridSkeleton';
 
 export default async function MembersPage() {
 	await syncUser();
-	const members = await getMembers();
-	const likeIds = await fetchCurrentUserLikeIds();
+
+	const [members, likeIds] = await Promise.all([
+		getMembers(),
+		fetchCurrentUserLikeIds(),
+	]);
 
 	return (
-		<div className="m-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-			{members &&
-				members.map((member, index) => {
-					// return <li key={member.id}>{member.name}</li>;
-					return (
-						<MemberCard
-							key={member.id}
-							member={member}
-							index={index}
-							likeIds={likeIds}
-						/>
-					);
-				})}
+		<div className="m-10">
+			<h1 className="text-2xl font-bold mb-6">Members</h1>
+			<Suspense fallback={<MemberGridSkeleton />}>
+				<MembersList />
+			</Suspense>
+		</div>
+	);
+}
+
+// Create this helper component in the same file or a new one
+async function MembersList() {
+	await syncUser();
+	const [members, likeIds] = await Promise.all([
+		getMembers(),
+		fetchCurrentUserLikeIds(),
+	]);
+
+	return (
+		<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+			{members?.map((member, index) => (
+				<MemberCard
+					key={member.id}
+					member={member}
+					index={index}
+					likeIds={likeIds}
+				/>
+			))}
 		</div>
 	);
 }

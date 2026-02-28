@@ -8,16 +8,20 @@ export async function getMembers() {
 	// if (!userId) return null;
 
 	try {
-		if (userId) {
-			return prisma.member.findMany({
-				where: {
-					NOT: {
-						clerkId: userId,
-					},
-				},
-			});
-		}
-		return prisma.member.findMany();
+		return prisma.member.findMany({
+			where: userId ? { NOT: { clerkId: userId } } : {},
+			select: {
+				id: true,
+				name: true,
+				image: true,
+				city: true,
+				country: true,
+				clerkId: true,
+				lastActive: true,
+				dateOfBirth: true,
+				// Only include fields you actually display on the card!
+			},
+		});
 	} catch (error) {
 		console.log(error);
 	}

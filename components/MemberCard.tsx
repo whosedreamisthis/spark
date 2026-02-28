@@ -7,8 +7,20 @@ import { calculateAge } from '@/lib/utils';
 import LikeButton from './LikeButton';
 import { isOnline } from '@/lib/utils';
 
+type MemberSummary = Pick<
+	Member,
+	| 'id'
+	| 'name'
+	| 'clerkId'
+	| 'image'
+	| 'city'
+	| 'country'
+	| 'lastActive'
+	| 'dateOfBirth'
+>;
+
 type Props = {
-	member: Member;
+	member: MemberSummary;
 	index: number;
 	likeIds: string[];
 };
