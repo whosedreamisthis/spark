@@ -5,6 +5,7 @@ import MessageTable from '@/components/messages/MessageTable';
 import { syncUser } from '@/lib/userSync';
 import { auth } from '@clerk/nextjs/server';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 
 export default async function MessagesPage({
 	searchParams,
@@ -18,7 +19,7 @@ export default async function MessagesPage({
 
 	// 2. If no user, show the login prompt
 	if (!userId) {
-		return redirectToSignIn();
+		redirect('/');
 	}
 
 	// 3. User is logged in, fetch messages

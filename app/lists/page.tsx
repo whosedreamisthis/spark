@@ -7,6 +7,7 @@ import MemberCard from '@/components/MemberCard';
 // import ListsBottomBar from '@/components/ListsBottomBar';
 import { auth } from '@clerk/nextjs/server';
 import { syncUser } from '@/lib/userSync';
+import { redirect } from 'next/navigation';
 
 export default async function ListsPage({
 	searchParams,
@@ -19,7 +20,7 @@ export default async function ListsPage({
 	const { userId, redirectToSignIn } = await auth();
 
 	if (!userId) {
-		return redirectToSignIn();
+		redirect('/');
 	}
 
 	// 1. Fetch both the members for the list AND the current user's liked IDs
