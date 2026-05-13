@@ -34,11 +34,11 @@ export default function MemberCard({ member, index, hasLiked }: Props) {
 						src={member.image || '/images/user.png'}
 						alt={member.name}
 						fill
-						priority={index < 4}
-						fetchPriority="high" // Add this for modern browsers
-						loading="eager" // Add this to skip the IntersectionObserver
+						priority={index < 6}
+						quality={60}
 						sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
-						// className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
+						className="object-cover"
+						// transition-transform duration-500 ease-in-out group-hover:scale-110"
 					/>
 					<div className="absolute top-0 right-3 z-50">
 						<LikeButton

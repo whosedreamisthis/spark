@@ -14,7 +14,6 @@ export default async function ListsPage({
 }: {
 	searchParams: Promise<{ type?: string }>;
 }) {
-	await syncUser();
 	const { type } = await searchParams;
 	const currentType = type || 'target';
 	const { userId, redirectToSignIn } = await auth();
@@ -29,6 +28,8 @@ export default async function ListsPage({
 		fetchCurrentUserLikeIds(),
 	]);
 	const likedSet = new Set(likeIds);
+
+	syncUser().catch((err) => console.error('Sync failed', err));
 
 	return (
 		<div className="flex flex-col min-h-screen pb-20">

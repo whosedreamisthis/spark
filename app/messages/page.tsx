@@ -12,7 +12,6 @@ export default async function MessagesPage({
 }: {
 	searchParams: Promise<{ container: string }>;
 }) {
-	await syncUser();
 	// 1. Check for session
 	const { userId, redirectToSignIn } = await auth();
 	const { container } = await searchParams;
@@ -21,6 +20,8 @@ export default async function MessagesPage({
 	if (!userId) {
 		redirect('/');
 	}
+
+	syncUser().catch((err) => console.error('Sync failed', err));
 
 	// 3. User is logged in, fetch messages
 	const messages = await getMessagesByContainer(container || 'inbox');

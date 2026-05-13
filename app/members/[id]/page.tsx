@@ -16,7 +16,6 @@ import { differenceInYears } from 'date-fns';
 import Image from 'next/image';
 import LikeButton from '@/components/LikeButton';
 import { fetchCurrentUserLikeIds } from '@/app/actions/likeActions';
-import { syncUser } from '@/lib/userSync';
 
 export default async function MemberPage({
 	params,
@@ -95,7 +94,7 @@ export default async function MemberPage({
 						{member.promptQuestion}
 					</p>
 					<p className="text-xl font-serif italic">
-						"{member.promptAnswer}"
+						{member.promptAnswer}
 					</p>
 				</section>
 			)}

@@ -19,11 +19,12 @@ export default async function MembersPage() {
 
 // Create this helper component in the same file or a new one
 async function MembersList() {
-	const [members, likeIds, _] = await Promise.all([
+	const [members, likeIds] = await Promise.all([
 		getMembers(),
 		fetchCurrentUserLikeIds(),
-		syncUser(),
 	]);
+
+	syncUser().catch((err) => console.error('Sync failed', err));
 
 	const likedSet = new Set(likeIds);
 
