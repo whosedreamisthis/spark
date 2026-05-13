@@ -33,7 +33,6 @@ export default function ProfileButton({ userId }: { userId: string | null }) {
 		return (
 			<div className="h-8 w-8 flex items-center justify-center">
 				<UserButton
-					afterSignOutUrl="/"
 					appearance={{
 						elements: {
 							avatarBox: 'h-8 w-8',
