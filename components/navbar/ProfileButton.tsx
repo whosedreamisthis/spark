@@ -82,10 +82,10 @@ export default function ProfileButton({ userId }: { userId: string | null }) {
 				<DropdownMenuSeparator />
 
 				<DropdownMenuItem
-					className="flex w-full items-center px-2 py-1.5 cursor-pointer bg-rose-600 text-white hover:bg-rose-700 transition-colors"
-					onClick={() => openSignIn({ mode: 'modal' })}
+					className="flex w-full items-center px-2 py-1.5 cursor-pointer "
+					onClick={() => openSignIn({ })}
 				>
-					<LogIn className="mr-2 h-4 w-4 text-white" />
+					<LogIn className="mr-2 h-4 w-4 " />
 					<span>Sign In</span>
 				</DropdownMenuItem>
 
