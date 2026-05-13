@@ -1,6 +1,6 @@
 'use client';
 
-import { SignInButton, SignUpButton, UserButton } from '@clerk/nextjs';
+import { useClerk, SignUpButton, UserButton } from '@clerk/nextjs';
 import { User, LogIn, UserPlus, UserCircle } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
@@ -16,9 +16,13 @@ import { Button } from '@/components/ui/button';
 
 export default function ProfileButton({ userId }: { userId: string | null }) {
 	const [mounted, setMounted] = useState(false);
+	const { openSignIn } = useClerk();
 
 	useEffect(() => {
-		setMounted(true);
+		const init = () => {
+			setMounted(true);
+		}
+		init();
 	}, []);
 
 	// Prevent Hydration Mismatch
@@ -68,9 +72,7 @@ export default function ProfileButton({ userId }: { userId: string | null }) {
 			<DropdownMenuContent className="w-56" align="end" forceMount>
 				<DropdownMenuLabel className="font-normal">
 					<div className="flex flex-col space-y-1">
-						<p className="text-sm font-medium leading-none">
-							Welcome
-						</p>
+						<p className="text-sm font-medium leading-none">Welcome</p>
 						<p className="text-xs leading-none text-muted-foreground">
 							Sign in to manage your profile
 						</p>
@@ -79,19 +81,17 @@ export default function ProfileButton({ userId }: { userId: string | null }) {
 
 				<DropdownMenuSeparator />
 
-				<SignInButton mode="modal">
-					<DropdownMenuItem className="cursor-pointer">
-						<LogIn className="mr-2 h-4 w-4" />
-						<span>Log in</span>
-					</DropdownMenuItem>
-				</SignInButton>
+				<DropdownMenuItem
+					className="flex w-full items-center px-2 py-1.5 cursor-pointer bg-rose-600 text-white hover:bg-rose-700 transition-colors"
+					onClick={() => openSignIn({ mode: 'modal' })}
+				>
+					<LogIn className="mr-2 h-4 w-4 text-white" />
+					<span>Sign In</span>
+				</DropdownMenuItem>
 
-				<SignUpButton mode="modal">
-					<DropdownMenuItem className="cursor-pointer">
-						<UserPlus className="mr-2 h-4 w-4" />
-						<span>Sign up</span>
-					</DropdownMenuItem>
-				</SignUpButton>
+				<DropdownMenuItem asChild>
+					<SignUpButton mode="modal"><div className="flex w-full items-center px-2 py-1.5 cursor-pointer"><UserPlus className="mr-2 h-4 w-4" /><span>Sign up</span></div></SignUpButton>
+				</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>
 	);
